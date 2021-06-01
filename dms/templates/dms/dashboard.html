@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>Admin Dashboard</title>
+		{% load static %}
+		<!-- Description, Keywords and Author -->
+		<meta name="description" content="Your description">
+		<meta name="keywords" content="Your,Keywords">
+		<meta name="author" content="ResponsiveWebInc">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- Styles -->
+		<!-- Bootstrap CSS -->
+		<link href="{% static 'dms/css/bootstrap.min.css' %}" rel="stylesheet">
+		<!-- Font awesome CSS -->
+		<link href="{% static 'dms/css/font-awesome.min.css' %}" rel="stylesheet">		
+		<!-- Custom CSS -->
+		<link href="{% static 'dms/css/style.css' %}" rel="stylesheet">
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="#">
+
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 15px;
+            }
+        </style>
+	</head>
+	
+	<body>
+		<div class="wrapper">
+			<!-- header -->
+			<header>
+				<!-- navigation -->
+                <div class="container">
+                    <h1>Welcome Admin! Here are the list of queries assigned to you...</h1>
+                </div>
+            </header>
+
+			<!-- banner -->
+			<div class="banner">
+				<div class="container">
+					<!-- heading -->
+					<h2>Easy &nbsp; Fast &nbsp; Secure</h2>
+					<!-- paragraph -->
+					<p>Welcome to AmendEasy</p>
+					<p>Save your time and use it effectively</p>
+				</div>
+			</div>
+			<!-- banner end -->
+			<div class="container">
+				<div class="row">
+					<table border="1" cellpadding="10px" cellspacing="10px">
+                        <tr>
+                            <th>User Aadhar Number</th>
+                            <th>Link</th>
+                        </tr>
+
+                        {% for i,j in all_queries.items %}
+							<tr>
+								<td>{{i}}</td>
+								<td><a href={{j}}>Check</a></td>
+							</tr>
+						{% endfor %}
+                    </table>
+				</div>
+			</div>
+		    {% if messages %}
+			    {% for message in messages %}
+				    {% if message.tags %}
+					    <script>alert('{{message}}')</script>
+				    {% endif %}
+	    		{% endfor %}
+		    {% endif %}
+				 	
+			<!-- footer -->
+		    <footer>
+			    <div class="container">
+				    <p><a href="#">Home</a> | <a href="#work">Feedback</a> | <a href="#team">Notice</a> </p>
+				    <div class="social" style="color: white;">
+					    Call : +91 123456789 <br>
+					    Email : abcdef@gmail.com
+	    			</div>
+	    			<!-- copy right -->
+		    		<!-- This theme comes under Creative Commons Attribution 4.0 Unported. So don't remove below link back -->
+			    </div>
+	    	</footer>
+	    </div>
+		
+        {% load static %}
+        <!-- Javascript files -->
+        <!-- jQuery -->
+        <script src="{% static 'dms/js/jquery.js' %}" type="text/javascript"></script>
+            
+        <!-- Bootstrap JS -->
+        <script src="{% static 'dms/js/bootstrap.min.js' %}" type="text/javascript"></script>
+            
+        <!-- Respond JS for IE8 -->
+        <script src="{% static 'dms/js/respond.min.js' %}" type="text/javascript"></script>
+            
+        <!-- HTML5 Support for IE -->
+        <script src="{% static 'dms/js/html5shiv.js' %}" type="text/javascript"></script>
+            
+        <!-- Custom JS -->
+        <script src="{% static 'dms/js/custom.js' %}" type="text/javascript"></script>
+            
+    </body>	
+</html>

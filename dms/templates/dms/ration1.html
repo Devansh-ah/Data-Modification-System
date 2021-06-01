@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>AmendEasy- Registration</title>
+		{% load static %}
+		<!-- Description, Keywords and Author -->
+		<meta name="description" content="Your description">
+		<meta name="keywords" content="Your,Keywords">
+		<meta name="author" content="ResponsiveWebInc">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- Styles -->
+		<!-- Bootstrap CSS -->
+		<link href="{% static 'dms/css/bootstrap.min.css' %}" rel="stylesheet">
+		<!-- Font awesome CSS -->
+		<link href="{% static 'dms/css/font-awesome.min.css' %}" rel="stylesheet">		
+		<!-- Custom CSS -->
+		<link href="{% static 'dms/css/style.css' %}" rel="stylesheet">
+		
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="#">
+	</head>
+	
+	<body>
+		
+		<div class="wrapper">
+		
+			<!-- header -->
+			<header>
+				<!-- navigation -->
+				<nav class="navbar navbar-default" role="navigation">
+					<div class="container">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<h2 style="color: black;">
+								AmendEasy</h2>
+							<!--<a class="navbar-brand" href="#"><img class="img-responsive" src="img/logo.png" alt="Logo" /></a>-->
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav navbar-right">
+								<li><a href={% url "index" %}>Home</a></li>
+								{% if user.is_authenticated %}
+        						<li><a href={% url "logout" %}>Logout</a></li>
+        						{% else %}
+								<li><a href="registration">Signup</a></li>
+        						<li><a href="login">Login</a></li>
+        						{% endif %}
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us<span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#event">How it works?</a></li>
+										<li><a href="#blog">Why us?</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div><!-- /.navbar-collapse -->
+					</div><!-- /.container-fluid -->
+				</nav>
+			</header>
+			{% if messages %}
+				    {% for message in messages %}
+					    {% if message.tags %}
+						   <script>alert('{{message}}')</script>
+					    {% endif %}
+				    {% endfor %}
+			    {% endif %}
+			<!-- banner -->
+			<div class="banner">
+				<div class="container">
+					<!-- form content / register area -->
+					<div class="register-area">
+						<!-- heading -->
+						<form action="" method="post" role="form" id="register-form" class="form-horizontal">
+						{% csrf_token %}
+						{% for i in aadhar %}
+						{% if i.AadharNo_id|stringformat:"s" == user.username %}
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="first_name">First Name:</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" name="first_name" value="{{i.fName}}">
+      </div>
+    </div>
+	<div class="form-group">
+		<label class="control-label col-sm-4" for="first_name">Middle Name:</label>
+		<div class="col-sm-8">
+		  <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" name="middle_name" value="{{i.mName}}">
+		</div>
+	  </div>
+	  <div class="form-group">
+		<label class="control-label col-sm-4" for="first_name">Last Name:</label>
+		<div class="col-sm-8">
+		  <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" name="last_name" value="{{i.lName}}">
+		</div>
+	  </div>
+
+	  <div class="form-group">
+		<label class="control-label col-sm-4" for="address">Street</label>
+		<div class="col-sm-8">
+		  <input type="text" class="form-control" placeholder="Enter your address" name="street" value="{{i.Street}}">
+		</div>
+	  </div>
+  
+	  <div class="form-group">
+		  <label class="control-label col-sm-4" for="address">City:</label>
+		  <div class="col-sm-8">
+			<input type="text" class="form-control" placeholder="Enter your address" name="city" value="{{i.city}}">
+		  </div>
+		</div>
+
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="address_proof">Upload address proof...</label>
+		<div class="col-sm-8">
+			<input type="file" name="address_proof" id="address_proof" enctype="multipart/form-data" required />
+		</div>
+		</div>
+
+
+	<div class="form-group">
+      <label class="control-label col-sm-4" for="dob">Date Of Birth:</label>
+      <div class="col-sm-8">
+		{{i.DOB}}
+        <input type="date" class="form-control" id="dob" name="dob">
+      </div>
+    </div>
+
+	<div class="form-group">
+      <label class="control-label col-sm-4" for="birth_proof">Upload birth proof...</label>
+      <div class="col-sm-8">
+        <input type="file" name="birth_proof" id="birth_proof" enctype="multipart/form-data" required/>
+      </div>
+    </div>
+
+	
+	<div class="form-group">
+      <label class="control-label col-sm-4" for="hof_name">Head Of Family's Name:</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="hof_name" placeholder="Enter your HOF's name" name="hof_name" value="{{i.HOF_name}}">
+      </div>
+    </div>
+							<div class="form-group">
+      <label class="control-label col-sm-4" for="hof_relation">Head Of Family's Relation:</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="hof_relation" placeholder="What is your relation with HOF?" name="hof_relation" value="{{i.HOF_relation}}">
+      </div>
+    </div>
+							<div class="form-group">
+      <label class="control-label col-sm-4" for="fh">Father(True)/Husband:</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="fh" placeholder="Father/Husband" name="fh" value="{{i.Father_or_Husband}}">
+      </div>
+    </div>
+							<div class="form-group">
+      <label class="control-label col-sm-4" for="fh_name">Father/Husband Name:</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="fh_name" placeholder="Enter his name" name="fh_name" value="{{i.name_F_or_H}}">
+      </div>
+    </div>
+
+	<div class="form-group">        
+      <div class="col-sm-offset-4 col-sm-8">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+	{% endif %}
+	{% endfor %}
+		</form>
+					</div>
+				</div>
+			</div>
+			<!-- banner end -->
+			
+			<!-- footer -->
+			<footer>
+				<div class="container">
+					<p><a href="#">Home</a> | <a href="#work">Feedback</a> | <a href="#team">Notice</a> </p>
+					<div class="social" style="color: white;">
+						Call : +91 123456789 <br>
+						Email : abcdef@gmail.com
+					</div>
+					<!-- copy right -->
+					<!-- This theme comes under Creative Commons Attribution 4.0 Unported. So don't remove below link back -->
+				</div>
+			</footer>			
+
+		</div>
+		
+		
+		<!-- Javascript files -->
+		<!-- jQuery -->
+		<script src="{% static 'dms/js/jquery.js' %}" type="text/javascript"></script>
+		
+		<!-- Bootstrap JS -->
+		<script src="{% static 'dms/js/bootstrap.min.js' %}" type="text/javascript"></script>
+		
+		<!-- Respond JS for IE8 -->
+		<script src="{% static 'dms/js/respond.min.js' %}" type="text/javascript"></script>
+		
+		<!-- HTML5 Support for IE -->
+		<script src="{% static 'dms/js/html5shiv.js' %}" type="text/javascript"></script>
+		
+		<!-- Custom JS -->
+		<script src="{% static 'dms/js/custom.js' %}" type="text/javascript"></script>
+	</body>	
+</html>

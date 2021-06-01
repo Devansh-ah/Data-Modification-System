@@ -1,0 +1,177 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<!-- Description, Keywords and Author -->
+	<meta name="description" content="Your description">
+	<meta name="keywords" content="Your,Keywords">
+	<meta name="author" content="ResponsiveWebInc">
+		
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+	<!-- Styles -->
+	<!-- Bootstrap CSS -->
+	<link href="{% static 'dms/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- Font awesome CSS -->
+	<link href="{% static 'dms/css/font-awesome.min.css' %}" rel="stylesheet">		
+	<!-- Custom CSS -->
+	<link href="{% static 'dms/css/style.css' %}" rel="stylesheet">
+		
+		
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="#">
+    <title>Verify Details</title>
+    <style>
+        .wrapper{
+            width:100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+            padding: 20px;
+        }
+
+        img{
+            width:200px;
+            height:200px;
+        }
+
+        .left_part{
+            height: auto;
+            border: solid black 1px;
+        }
+
+        .right_part{
+            height: auto;
+            border: solid black 1px;
+        }
+        
+        h2{
+            width:100%;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+        {% load img_tag %}
+        
+        {% comment %} {%with img_src=data.address_proof.url|modify_url%}
+            <img src="{% static img_src %}">
+        {%endwith%} {% endcomment %}
+        <div class="wrapper">
+            <div class="left_part">
+                <h2>Query Data Given by User</h2>
+                <form action="aorr" method="post" role="form" id="register-form" class="form-horizontal" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="col_names" value="{{data.AadharNo}},{{col_names|combine_list}}">
+                    <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Value</th>
+                            <th scope="col">Proof</th>
+                            <th scope="col">Accept/Reject</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i,j in zipped_values %}
+                                <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{i|title}}</td>
+                                <td>{{j|checkifimage}}</td>
+                                <td>
+                                    {%ifequal i "address_proof"%}
+                                        {%with img_src=data.address_proof.url|modify_url%}
+                                            <img src="{% static img_src %}">
+                                        {%endwith%}
+                                    {%endifequal%}
+
+                                    {%ifequal i "birth_proof"%}
+                                        {%with img_src=data.birth_proof.url|modify_url%}
+                                            <img src="{% static img_src %}">
+                                        {%endwith%}
+                                    {%endifequal%}
+                                </td>
+                                <td>
+                                    <input type="radio" id="accept_{{i}}" name="field_{{i}}" value="accept">
+                                    <label for="accept_{{i}}">Accept</label><br>
+                                    <input type="radio" id="reject_{{i}}" name="field_{{i}}" value="reject" checked>
+                                    <label for="reject_{{i}}">Reject</label><br>
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <div class="form-group">        
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="right_part">
+                <h2>Actual User Data</h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Value</th>
+                        <th scope="col">Media</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i,j in aadhar_details %}
+                            <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{i}}</td>
+                            <td>{{j|checkifimage}}</td>
+                            <td>
+                                {%ifequal i "Image"%}
+                                    {%with img_src=j|modify_url%}
+                                        <img src="{% static img_src %}">
+                                    {%endwith%}
+                                {%endifequal%}
+
+                                {%ifequal i "QR_code"%}
+                                    {%with img_src=j|modify_url%}
+                                        <img src="{% static img_src %}">
+                                    {%endwith%}
+                                {%endifequal%}
+
+                                {%ifequal i "fp_Actualdata"%}
+                                    {%with img_src=j|modify_url%}
+                                        <img src="{% static img_src %}" alt="Fingerprint Image">
+                                    {%endwith%}
+                                {%endifequal%}
+
+                            </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+            </div>
+        </div>
+
+        <!-- Javascript files -->
+		<!-- jQuery -->
+		<script src="{% static 'dms/js/jquery.js' %}" type="text/javascript"></script>
+		
+		<!-- Bootstrap JS -->
+		<script src="{% static 'dms/js/bootstrap.min.js' %}" type="text/javascript"></script>
+		
+		<!-- Respond JS for IE8 -->
+		<script src="{% static 'dms/js/respond.min.js' %}" type="text/javascript"></script>
+		
+		<!-- HTML5 Support for IE -->
+		<script src="{% static 'dms/js/html5shiv.js' %}" type="text/javascript"></script>
+		
+		<!-- Custom JS -->
+		<script src="{% static 'dms/js/custom.js' %}" type="text/javascript"></script>
+</body>
+</html>
