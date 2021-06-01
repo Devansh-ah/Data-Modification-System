@@ -630,13 +630,14 @@ def aadhar_query_status(request):
 
     if(len(all_queries) == 0):
         return render(request, 'dms/aadhar_status.html', {"entries": "No application found!"})
-    print("Aadhar_status: ", all_queries)
-    print("All queries: ", all_queries_queries)
+    # print("Aadhar_status: ", all_queries)
+    # print("All queries: ", all_queries_queries)
     all_queries_aadhars = []
     for i in all_queries:
         all_queries_aadhars.append(i[1])
 
     id_to_remove_query = -1
+    current_query = 0
     for i in all_queries_queries:
         if str(i[1]) == str(request.user):
             if i[1] not in all_queries_aadhars:
@@ -644,19 +645,20 @@ def aadhar_query_status(request):
                 return redirect("index")
             else:
                 id_to_remove_query = i[0]
+                current_query = i[1:]
 
     for i in range(1, len(col_names_metadata)):
         col_names.append(str(list(col_names_metadata)[i]).split(".")[-1])
 
-    print("Col_Names: ", col_names)
+    # print("Col_Names: ", col_names)
     status_values = []
     id_to_remove_status_query = -1
     for i in all_queries:
         if str(i[1]) == str(request.user):
             id_to_remove_status_query = list(i)[0]
             status_values = list(i)[1:]
-    print("Id to be removed from query: ", id_to_remove_query)
-    print("Id to be removed from status: ", id_to_remove_status_query)
+    # print("Id to be removed from query: ", id_to_remove_query)
+    # print("Id to be removed from status: ", id_to_remove_status_query)
 
     if id_to_remove_query == -1 or id_to_remove_status_query == -1:
         return render(request, 'dms/aadhar_status.html', {"entries": "No application found!"})
@@ -673,6 +675,42 @@ def aadhar_query_status(request):
     # check if query accepted or rejected
     # f = 0 means accepted, f = 1 means rejected
     # if f==0:
+    active_user = int(str(request.user))
+
+    aadhar_all_objects = Aadhar.objects.all().values_list()
+
+    # get the object of the aadhar number for which details are to be changed
+    aadhar_to_be_updated = Aadhar.objects.get(Aadhar_Number=active_user)
+
+    for i in aadhar_all_objects:
+        if i[0] == active_user:
+            # print("Matched: ", i)
+            # print("Query: ", current_query)
+
+            current_query_fname = current_query[1]
+            current_query_mname = current_query[2]
+            current_query_lname = current_query[3]
+            current_query_street = current_query[4]
+            current_query_city = current_query[5]
+            current_query_pincode = current_query[6]
+            current_query_sex = current_query[8]
+            current_query_mobile = current_query[9]
+
+            # print("Current Query Fname: ", current_query_fname)
+
+            aadhar_to_be_updated.fName = current_query_fname
+            aadhar_to_be_updated.mName = current_query_mname
+            aadhar_to_be_updated.lName = current_query_lname
+            aadhar_to_be_updated.Street = current_query_street
+            aadhar_to_be_updated.city = current_query_city
+            aadhar_to_be_updated.pincode = current_query_pincode
+            aadhar_to_be_updated.Sex = current_query_sex
+            aadhar_to_be_updated.Mobile_NUmber = current_query_mobile
+
+            aadhar_to_be_updated.save()
+            # print("After updation: ", aadhar_to_be_updated)
+            # print(aadhar_to_be_updated.fName)
+            break
 
     zipped_values = zip(col_names, status_values)
 
