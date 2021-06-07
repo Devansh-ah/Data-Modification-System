@@ -84,14 +84,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Govdb',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': '1234',
         'HOST': 'localhost'
     },
     'system': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'systemdb',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': '1234',
         'HOST': 'localhost'
     }
 }
